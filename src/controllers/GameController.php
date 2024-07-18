@@ -1,24 +1,22 @@
 <?php
 
-require_once '../src/config/session.php';
-//require_once '../src/config/logger.php';
-require_once '../src/config/database.php';
-require_once '../src/controllers/AuthController.php';
-require_once '../src/controllers/UserController.php';
-
-// $logger = new Logger();
-// $logger->console_log("GameController.php");
+require_once __DIR__ . '/../config/session.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 
 class GameController {
     
     private $pdo;
+    
     private $authController;
+    private $userController;
 
-    public function __construct() {
-        global $pdo;
-
+    public function __construct($pdo) {
         $this->pdo = $pdo;
-        $this->authController = new AuthController();
+
+        $this->authController = new AuthController($this->pdo);
+        $this->userController = new UserController($this->pdo);
     }
 
     public function createGame($wordLength, $token) {
