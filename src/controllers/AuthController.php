@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../config/session.php';
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 
 class AuthController {
     private $pdo;
@@ -38,10 +39,12 @@ class AuthController {
         $stmt = $this->pdo->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
 
         if ($stmt->execute([$username, $email, $hash])) {
-            $token = $this->generateToken($this->pdo->lastInsertId());
-            $_SESSION['auth_token'] = $token;
+            $userId = $this->pdo->lastInsertId();
+            $userController = new UserController($this->pdo);
+            $userController->addUserScore($userId);
 
-            return $token;
+            return $this->generateToken($userId);
+
         } else {
             return false;
         }
