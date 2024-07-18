@@ -9,9 +9,16 @@ require_once '../../../src/middleware/AuthMiddleware.php';
 header('Content-Type: application/json');
 
 
+//  calculate score on both sides
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {     //  TODO: Add input value for attmpts.
     $data = json_decode(file_get_contents('php://input'), true);
     $wordLength = $data['wordLength'];
+    $maxAttempts = $data['wordLength'];
+    
+    if ($wordLength < 4 || $wordLength > 8 || $maxAttempts < 3 || $maxAttempts > 8) {
+        echo json_encode(['success' => false, 'error' => 'Invalid word length or max attempts']);
+        exit();
+    }
 
     $authMiddleware = new AuthMiddleware($pdo);
     $userId = $authMiddleware->checkAuthHeader();
@@ -22,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {     //  TODO: Add input value for at
     }
 
     $gameController = new GameController($pdo);
-    $gameStatus = $gameController->createGame($userId, $wordLength);
+    $gameStatus = $gameController->createGame($userId, $wordLength, $maxAttempts);
 
     if ($gameStatus) {
         echo json_encode(['success' => true, 'game_status' => $gameStatus]);

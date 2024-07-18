@@ -95,7 +95,7 @@ function getUser() {
 /* Game */
 /* ------------------------------------------------------------------------------- */
 
-function createGame(wordLength) {
+function createGame(wordLength, maxAttempts) {
     const token = localStorage.getItem('auth_token');
     if (!token) {
         console.error('No auth token found');
@@ -108,7 +108,7 @@ function createGame(wordLength) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({ wordLength: wordLength })
+        body: JSON.stringify({ wordLength: wordLength, maxAttempts: maxAttempts })
     })
     .then(response => response.json())
     .then(data => {
@@ -169,6 +169,7 @@ if (endButton) {
     });
 }
 
+/* Forms */
 /* ------------------------------------------------------------------------------- */
 
 // Event listener for login form
@@ -204,6 +205,7 @@ if (gameSetupForm) {
     gameSetupForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const wordLength = document.getElementById('word-length').value;
-        createGame(wordLength);
+        const maxAttempts = document.getElementById('max-attempts').value;
+        createGame(wordLength, maxAttempts);
     });
 }

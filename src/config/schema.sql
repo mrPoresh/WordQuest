@@ -15,6 +15,9 @@ CREATE TABLE games (
     status ENUM('in_progress', 'won', 'lost') DEFAULT 'in_progress',
     start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     end_time TIMESTAMP NULL,
+    max_attempts INT NOT NULL,
+    max_win_score INT NOT NULL,
+    loose_score INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

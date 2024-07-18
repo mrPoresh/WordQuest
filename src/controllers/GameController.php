@@ -19,27 +19,33 @@ class GameController {
         $this->userController = new UserController($this->pdo);
     }
 
-    public function createGame($userId, $wordLength) {
-        $stmt = $this->pdo->prepare("SELECT word FROM words_$wordLength ORDER BY RAND() LIMIT 1");
-        $stmt->execute();
-        $word = $stmt->fetchColumn();
+    public function createGame($userId, $wordLength, $maxAttempts) {
+        list($winScore, $minWinScore, $looseScore) = $this->calculatePoints($wordLength, $maxAttempts);
 
-        if ($word) {
-            $stmt = $this->pdo->prepare('INSERT INTO games (user_id, secret_word, status) VALUES (?, ?, ?)');
+        $tableName = "words_" . $wordLength;
+        $stmt = $this->pdo->query("SELECT word FROM $tableName ORDER BY RAND() LIMIT 1");
+        $secretWord = $stmt->fetchColumn();
 
-            if ($stmt->execute([$userId, $word, 'in_progress'])) {
-                //return $this->pdo->lastInsertId();
-                return true;
-            }
-        }
+        $sql = "INSERT INTO games (user_id, secret_word, max_attempts, max_win_score, loose_score) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
 
-        return false;
+        return $stmt->execute([$userId, $secretWord, $maxAttempts, $winScore, $looseScore]);
     }
 
     public function endActiveGame($userId) {
         $stmt = $this->pdo->prepare('UPDATE games SET status = ? WHERE user_id = ? AND status = ?');
-        
-        return $stmt->execute(['lost', $userId, 'in_progress']);
+        $stmt->execute(['lost', $userId, 'in_progress']);
+
+        $stmt = $this->pdo->prepare('SELECT loose_score FROM games WHERE user_id = ? AND status = ? ORDER BY end_time DESC LIMIT 1');
+        $stmt->execute([$userId, 'lost']);
+        $game = $stmt->fetch();
+
+        if ($game) {
+            $looseScore = -$game['loose_score'];
+            return $this->updateUserScore($userId, $looseScore);
+        }
+
+        return false;
     }
 
     public function loadGame($userId) {
@@ -47,6 +53,20 @@ class GameController {
         $stmt->execute([$userId, 'in_progress']);
         
         return $stmt->fetch();
+    }
+
+    private function updateUserScore($userId, $scoreChange) {
+        $stmt = $this->pdo->prepare('UPDATE scores SET current_score = current_score + ?, last_score = ? WHERE user_id = ?');
+        return $stmt->execute([$scoreChange, $scoreChange, $userId]);
+    }
+
+    private function calculatePoints($wordLength, $attempts) {
+        $baseScore = $wordLength * 10;
+        $maxWinScore = $baseScore * 10;
+        $minWinScore = $maxWinScore - $baseScore * ($attempts - 3);
+        $looseScore = $maxWinScore / 2;
+
+        return [$maxWinScore, $minWinScore, $looseScore];
     }
 
     // public function createGame($wordLength, $token) {
