@@ -6,9 +6,9 @@ require_once '../../../src/controllers/AuthController.php';
 
 header('Content-Type: application/json');
 
-$authController = new AuthController($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $authController = new AuthController($pdo);
     $data = json_decode(file_get_contents('php://input'), true);
     
     $username = $data['username'];
@@ -25,6 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'error' => 'Registration failed']);
     }
 
+    exit();
+
+} else {
+    echo json_encode(['success' => false, 'error' => 'Invalid request method']);
     exit();
 }
 

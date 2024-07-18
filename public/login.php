@@ -4,6 +4,7 @@ require_once '../src/config/session.php';
 require_once '../src/config/database.php';
 require_once '../src/controllers/AuthController.php';
 
+
 $authController = new AuthController($pdo);
 
 if (isset($_SESSION['auth_token'])) {

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../config/session.php';
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 
 class AuthController {
     private $pdo;
@@ -38,10 +39,12 @@ class AuthController {
         $stmt = $this->pdo->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
 
         if ($stmt->execute([$username, $email, $hash])) {
-            $token = $this->generateToken($this->pdo->lastInsertId());
-            $_SESSION['auth_token'] = $token;
+            $userId = $this->pdo->lastInsertId();
+            $userController = new UserController($this->pdo);
+            $userController->addUserScore($userId);
 
-            return $token;
+            return $this->generateToken($userId);
+
         } else {
             return false;
         }
@@ -60,16 +63,16 @@ class AuthController {
         $payload = $this->base64UrlEncode(json_encode(['id' => $userId, 'exp' => time() + (3 * 24 * 60 * 60)]));
         $signature = $this->base64UrlEncode(hash_hmac('sha256', "$header.$payload", $this->secretKey, true));
     
-        error_log("Generated token: $header.$payload.$signature");
+        //  error_log("Generated token: $header.$payload.$signature");
         return "$header.$payload.$signature";
     }
 
     public function verifyToken($token) {
-        error_log("verifyToken called with token: $token");
+        //  error_log("verifyToken called with token: $token");
     
         $parts = explode('.', $token);
         if (count($parts) !== 3) {
-            error_log("Token does not have 3 parts");
+            //  error_log("Token does not have 3 parts");
             return false;
         }
     
@@ -79,29 +82,29 @@ class AuthController {
         $header = json_decode($headerDecoded, true);
         $payload = json_decode($payloadDecoded, true);
     
-        error_log("Header: " . print_r($header, true));
-        error_log("Payload: " . print_r($payload, true));
+        //  error_log("Header: " . print_r($header, true));
+        //  error_log("Payload: " . print_r($payload, true));
     
         if ($header['alg'] !== 'HS256') {
-            error_log("Algorithm is not HS256");
+            //  error_log("Algorithm is not HS256");
             return false;
         }
     
         $expectedSignature = $this->base64UrlEncode(hash_hmac('sha256', "$parts[0].$parts[1]", $this->secretKey, true));
-        error_log("Expected signature: $expectedSignature");
-        error_log("Actual signature: $signature");
+        //  error_log("Expected signature: $expectedSignature");
+        //  error_log("Actual signature: $signature");
     
         if ($signature !== $expectedSignature) {
-            error_log("Signature does not match");
+            //  error_log("Signature does not match");
             return false;
         }
     
         if ($payload['exp'] < time()) {
-            error_log("Token has expired");
+            //  error_log("Token has expired");
             return false;
         }
     
-        error_log("Token is valid, user ID: " . $payload['id']);
+        //  error_log("Token is valid, user ID: " . $payload['id']);
         return $payload['id'];
     }
 
