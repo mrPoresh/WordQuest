@@ -22,19 +22,24 @@ $title = "Login";
 ob_start();
 
 ?>
-<h1>LMKKKK ok ok</h1>
-<h2>Login</h2>
-<div id="error-message" style="color: red;"></div>
-<form id="login-form">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="signup.php">Sign up</a></p>
+
+<title>Login</title>
+<link rel="stylesheet" href="assets/css/global.css">
+    <div class="box-wrapper">
+        <h2>Login</h2>
+        <div id="error-message" style="color: red;"></div>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.php">Sign up</a></p>
+</div>
+
 
 <?php
 
