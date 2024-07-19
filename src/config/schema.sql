@@ -12,9 +12,11 @@ CREATE TABLE games (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     secret_word VARCHAR(8) NOT NULL,
+    word_length INT NOT NULL,
     status ENUM('in_progress', 'won', 'lost') DEFAULT 'in_progress',
     start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     end_time TIMESTAMP NULL,
+    attempts INT NOT NULL,
     max_attempts INT NOT NULL,
     max_win_score INT NOT NULL,
     loose_score INT NOT NULL,
@@ -48,7 +50,8 @@ CREATE TABLE word_x (   -- in our case from word_4 -> word_8
 CREATE TABLE attempts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     game_id INT NOT NULL,
-    attempt_word VARCHAR(5) NOT NULL,
+    attempt_word VARCHAR(8) NOT NULL,
+    feedback VARCHAR(8) NOT NULL,
     attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (game_id) REFERENCES games(id)
 );

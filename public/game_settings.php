@@ -75,7 +75,7 @@ ob_start();
 
         const { maxWinScore, minWinScore, looseScore } = calculatePoints(wordLength, maxAttempts);
 
-        document.getElementById('points-info').innerText = `Maximum points: ${maxWinScore}, Maximum points: ${minWinScore}, Loose points: ${looseScore}`;
+        document.getElementById('points-info').innerText = `Maximum points: ${maxWinScore}, Minimum points: ${minWinScore}, Loose points: ${looseScore}`;
     }
 
     document.addEventListener('DOMContentLoaded', function() {

@@ -9,16 +9,9 @@ require_once '../../../src/middleware/AuthMiddleware.php';
 header('Content-Type: application/json');
 
 
-//  calculate score on both sides
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {     //  TODO: Add input value for attmpts.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    $wordLength = $data['wordLength'];
-    $maxAttempts = $data['maxAttempts'];
-    
-    if ($wordLength < 4 || $wordLength > 8 || $maxAttempts < 3 || $maxAttempts > 8) {
-        echo json_encode(['success' => false, 'error' => 'Invalid word length or max attempts']);
-        exit();
-    }
+    $guess = $data['guess'];
 
     $authMiddleware = new AuthMiddleware($pdo);
     $userId = $authMiddleware->checkAuthHeader();
@@ -29,16 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {     //  TODO: Add input value for at
     }
 
     $gameController = new GameController($pdo);
-    $gameStatus = $gameController->createGame($userId, $wordLength, $maxAttempts);
+    $activeGame = $gameController->loadGame($userId);
 
-    if ($gameStatus) {
-        echo json_encode(['success' => true, 'game_status' => $gameStatus]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Failed to create a new game']);
+    if (!$activeGame) {
+        echo json_encode(['success' => false, 'error' => 'No active game found']);
+        exit();
     }
-   
-    exit();
 
+    $result = $gameController->addAttempt($userId, $activeGame['id'], $guess);
+
+    echo json_encode(['success' => true, 'result' => $result]);
+    exit();
 } else {
     echo json_encode(['success' => false, 'error' => 'Invalid request method']);
     exit();

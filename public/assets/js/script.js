@@ -152,6 +152,38 @@ function continueGame() {
     window.location.href = 'game.php';
 }
 
+function sendAttempt(guess) {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+        console.error('No auth token found');
+        return;
+    }
+
+    fetch('api/game/add_attempt.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ guess: guess })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Attempt result:', data.result);
+            if (data.result.status !== 'in_progress') {
+                window.location.href = 'result.php';
+            } else {
+                updateGrid(data.result.feedback);
+            }
+
+        } else {
+            alert('Failed to add attempt: ' + data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 /* Btns */
 /* ------------------------------------------------------------------------------- */
 
@@ -209,3 +241,71 @@ if (gameSetupForm) {
         createGame(wordLength, maxAttempts);
     });
 }
+
+const gameAttemptForm = document.getElementById('gameForm');
+if (gameAttemptForm) {
+    gameAttemptForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+    
+        const formData = new FormData(document.getElementById('gameForm'));
+        const guess = [];
+    
+        formData.forEach((value, key) => {
+            const match = key.match(/guess\[(\d+)\]\[(\d+)\]/);
+            if (match) {
+                const rowIndex = parseInt(match[1], 10);
+                const colIndex = parseInt(match[2], 10);
+                if (!guess[rowIndex]) guess[rowIndex] = [];
+                guess[rowIndex][colIndex] = value;
+            }
+        });
+
+        console.log("guess: ", guess);
+        console.log("guess -1: ", guess[guess.length - 1]);
+
+        sendAttempt(guess[guess.length - 1]);
+
+    });
+}
+
+function updateGrid(feedback) {
+    const rows = document.querySelectorAll('.grid input');
+    console.log('rows', rows)
+
+    let currentRow = 0;
+    
+    for (let i = 0; i < rows.length; i++) {
+        if (!rows[i].disabled) {
+            currentRow = rows[i].name.match(/guess\[(\d+)\]\[(\d+)\]/)[1];
+            break;
+        }
+    }
+
+    console.log('currentRow', currentRow)
+    const inputs = document.querySelectorAll(`.grid input[name^="guess[${currentRow}]"]`);
+    console.log('inputs', inputs)
+
+    inputs.forEach((input, index) => {
+        input.classList.remove('correct', 'misplaced', 'incorrect');
+
+        if (feedback[index] === 2) {
+            input.classList.add('correct');
+        } else if (feedback[index] === 1) {
+            input.classList.add('misplaced');
+        } else {
+            input.classList.add('incorrect');
+        }
+
+        input.disabled = true;
+    });
+
+    const nextRow = document.querySelector(`.grid input[name^="guess[${parseInt(currentRow) + 1}]"]`);
+    
+    if (nextRow) {
+        document.querySelectorAll(`.grid input[name^="guess[${parseInt(currentRow) + 1}]"]`).forEach(input => {
+            input.disabled = false;
+        });
+    }
+}
+
+

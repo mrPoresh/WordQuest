@@ -26,10 +26,10 @@ class GameController {
         $stmt = $this->pdo->query("SELECT word FROM $tableName ORDER BY RAND() LIMIT 1");
         $secretWord = $stmt->fetchColumn();
 
-        $sql = "INSERT INTO games (user_id, secret_word, max_attempts, max_win_score, loose_score) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO games (user_id, secret_word, word_length, attempts, max_attempts, max_win_score, loose_score) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([$userId, $secretWord, $maxAttempts, $winScore, $looseScore]);
+        return $stmt->execute([$userId, $secretWord, $wordLength, 0, $maxAttempts, $winScore, $looseScore]);
     }
 
     public function endActiveGame($userId) {
@@ -56,8 +56,28 @@ class GameController {
     }
 
     private function updateUserScore($userId, $scoreChange) {
-        $stmt = $this->pdo->prepare('UPDATE scores SET current_score = current_score + ?, last_score = ? WHERE user_id = ?');
-        return $stmt->execute([$scoreChange, $scoreChange, $userId]);
+        // Start a transaction
+        $this->pdo->beginTransaction();
+        
+        try {
+            // Get the current score
+            $stmt = $this->pdo->prepare('SELECT current_score FROM scores WHERE user_id = ?');
+            $stmt->execute([$userId]);
+            $currentScore = $stmt->fetchColumn();
+    
+            // Update the scores
+            $stmt = $this->pdo->prepare('UPDATE scores SET current_score = current_score + ?, last_score = ? WHERE user_id = ?');
+            $result = $stmt->execute([$scoreChange, $currentScore, $userId]);
+    
+            // Commit the transaction
+            $this->pdo->commit();
+            
+            return $result;
+        } catch (Exception $e) {
+            // Rollback the transaction if something failed
+            $this->pdo->rollBack();
+            throw $e;
+        }
     }
 
     private function calculatePoints($wordLength, $attempts) {
@@ -69,129 +89,89 @@ class GameController {
         return [$maxWinScore, $minWinScore, $looseScore];
     }
 
-    // public function createGame($wordLength, $token) {
-    //     $userId = $this->authController->verifyToken($token);
+    private function calculateWinScore($wordLength, $attempts) {
+        $baseScore = $wordLength * 10;
+        $maxWinScore = $baseScore * 10;
 
-    //     if (!$userId) {
-    //         return false;
-    //     }
+        if ($attempts <= 4) {
+            $attempts = 3;
+        }
 
-    //     // Check if there is an active game and mark it as lost
-    //     $stmt = $this->pdo->prepare('UPDATE games SET status = "lost", end_time = NOW() WHERE user_id = ? AND status = "in_progress"');
-    //     $stmt->execute([$userId]);
+        $score = $maxWinScore - $baseScore * ($attempts - 3);
+    
+        return $score;
+    }
 
-    //     // Select a random word from the appropriate table
-    //     $stmt = $this->pdo->query("SELECT word FROM words_{$wordLength} ORDER BY RAND() LIMIT 1");
-    //     $word = $stmt->fetchColumn();
+    public function addAttempt($userId, $gameId, $guess) {
+        $stmt = $this->pdo->prepare('SELECT secret_word, attempts, max_attempts, loose_score FROM games WHERE id = ? AND user_id = ?');
+        $stmt->execute([$gameId, $userId]);
+        $game = $stmt->fetch();
+    
+        if (!$game) {
+            return ['success' => false, 'error' => 'Game not found'];
+        }
+    
+        if ($game['attempts'] >= $game['max_attempts']) {
+            return ['success' => false, 'error' => 'Maximum attempts reached'];
+        }
+    
+        $secretWord = $game['secret_word'];
+        $wordLength = strlen($secretWord);
+        $attempts = $game['attempts'] + 1;
+    
+        $feedback = [];
+        for ($i = 0; $i < $wordLength; $i++) {
+            if ($guess[$i] == $secretWord[$i]) {
+                $feedback[$i] = 2; // Correct position and letter
+            } elseif (strpos($secretWord, $guess[$i]) !== false) {
+                $feedback[$i] = 1; // Correct letter, wrong position
+            } else {
+                $feedback[$i] = 0; // Wrong letter
+            }
+        }
+    
+        $status = 'in_progress';
+    
+        if (implode('', $guess) === $secretWord) {
+            $status = 'won';
+            $winScore = $this->calculateWinScore($wordLength, $attempts); // Calculate win score
+            $this->updateUserScore($userId, $winScore);
+        } elseif ($attempts >= $game['max_attempts']) {
+            $status = 'lost';
+            $this->updateUserScore($userId, -$game['loose_score']);
+        }
 
-    //     // Create a new game
-    //     $stmt = $this->pdo->prepare('INSERT INTO games (user_id, secret_word) VALUES (?, ?)');
-    //     $stmt->execute([$userId, $word]);
+        if ($status != 'in_progress') {
+            $stmt = $this->pdo->prepare('DELETE FROM attempts WHERE game_id = ?');
+            $stmt->execute([$gameId]);
+        } else {
+            // Save attempt with feedback
+            $stmt = $this->pdo->prepare('INSERT INTO attempts (game_id, attempt_word, feedback) VALUES (?, ?, ?)');
+            $stmt->execute([$gameId, implode('', $guess), implode('', $feedback)]);
+        }
+    
+        // Update game status and attempts count
+        $stmt = $this->pdo->prepare('UPDATE games SET attempts = ?, status = ? WHERE id = ?');
+        $stmt->execute([$attempts, $status, $gameId]);
+    
+        return ['feedback' => $feedback, 'status' => $status];
+    }
 
-    //     return true;
-    // }
+    public function getAttemptsWithFeedback($gameId) {
+        $stmt = $this->pdo->prepare('SELECT attempt_word, feedback FROM attempts WHERE game_id = ? ORDER BY id ASC');
+        $stmt->execute([$gameId]);
+        $attempts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // public function loadGame($token, $username) {
-    //     $userId = $this->authController->verifyToken($token);
-    //     if (!$userId) {
-    //         return false; // Invalid token
-    //     }
+        $result = [];
+        foreach ($attempts as $attempt) {
+            $attempt_word = str_split($attempt['attempt_word']);
+            $feedback = str_split($attempt['feedback']);
+            $result[] = ['attempt_word' => $attempt_word, 'feedback' => $feedback];
+        }
 
-    //     // Retrieve username from database
-    //     $stmt = $this->pdo->prepare('SELECT username FROM users WHERE id = ?');
-    //     $stmt->execute([$userId]);
-    //     $dbUsername = $stmt->fetchColumn();
+        return $result;
+    }
 
-    //     if ($username !== $dbUsername) {
-    //         return false; // Username does not match
-    //     }
-
-    //     // Retrieve the last game with status 'in_progress'
-    //     $stmt = $this->pdo->prepare('SELECT * FROM games WHERE user_id = ? AND status = "in_progress" ORDER BY start_time DESC LIMIT 1');
-    //     $stmt->execute([$userId]);
-    //     $game = $stmt->fetch();
-
-    //     if (!$game) {
-    //         return false; // No active game found
-    //     }
-
-    //     return $game;
-    // }
-
-    // public function sendAttempt($token, $username, $attemptWord) {
-    //     $userId = $this->authController->verifyToken($token);
-    //     if (!$userId) {
-    //         return false; // Invalid token
-    //     }
-
-    //     $stmt = $this->pdo->prepare('SELECT username FROM users WHERE id = ?');
-    //     $stmt->execute([$userId]);
-    //     $dbUsername = $stmt->fetchColumn();
-
-    //     if ($username !== $dbUsername) {
-    //         return false; // Username does not match
-    //     }
-
-    //     $stmt = $this->pdo->prepare('SELECT * FROM games WHERE user_id = ? AND status = "in_progress"');
-    //     $stmt->execute([$userId]);
-    //     $game = $stmt->fetch();
-
-    //     if (!$game) {
-    //         return false; // No active game found
-    //     }
-
-    //     $stmt = $this->pdo->prepare('SELECT * FROM attempts WHERE game_id = ?');
-    //     $stmt->execute([$game['id']]);
-    //     $attempts = $stmt->fetchAll();
-
-    //     if (count($attempts) >= 5) {
-    //         return "Maximum number of attempts reached"; // Error
-    //     }
-
-    //     $stmt = $this->pdo->prepare('INSERT INTO attempts (game_id, attempt_word) VALUES (?, ?)');
-    //     $stmt->execute([$game['id'], $attemptWord]);
-
-    //     if ($attemptWord === $game['secret_word']) {
-    //         $stmt = $this->pdo->prepare('UPDATE games SET status = "won", end_time = NOW() WHERE id = ?');
-    //         $stmt->execute([$game['id']]);
-
-    //         $stmt = $this->pdo->prepare('DELETE FROM attempts WHERE game_id = ?');
-    //         $stmt->execute([$game['id']]);
-
-    //         return "Congratulations! You've guessed the word!";
-    //     } else if (count($attempts) + 1 >= 5) {
-    //         $stmt = $this->pdo->prepare('UPDATE games SET status = "lost", end_time = NOW() WHERE id = ?');
-    //         $stmt->execute([$game['id']]);
-
-    //         return "Game over! You've used all attempts.";
-    //     } else {
-    //         $feedback = [];
-    //         for ($i = 0; $i < strlen($attemptWord); $i++) {
-    //             if ($attemptWord[$i] === $game['secret_word'][$i]) {
-    //                 $feedback[] = 2; // Correct position
-    //             } else if (strpos($game['secret_word'], $attemptWord[$i]) !== false) {
-    //                 $feedback[] = 1; // Correct letter, wrong position
-    //             } else {
-    //                 $feedback[] = 0; // Incorrect letter
-    //             }
-    //         }
-    //         return $feedback; // Return feedback array for the attempt
-    //     }
-    // }
-
-    // public function handleAttemptRequest() {
-    //     header('Content-Type: application/json');
-
-    //     $data = json_decode(file_get_contents('php://input'), true);
-
-    //     $token = $data['token'];
-    //     $username = $data['username'];
-    //     $attempt_word = $data['attempt_word'];
-
-    //     $response = $this->sendAttempt($token, $username, $attempt_word);
-
-    //     echo json_encode($response);
-    // }
 }
 
 ?>

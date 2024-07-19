@@ -8,6 +8,9 @@ body {
     justify-content: flex-start;
 
     margin: 0;
+
+    background-image: url('/public/assets/images/background/background2.png');
+    /*background-size: cover;*/
 }
 
 .body-wrapper {
@@ -29,4 +32,115 @@ body {
     &.desktop {
         max-width: 1280px;
     }
+}
+
+/* Game Page */
+/* ------------------------------------------------- */
+
+.game-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 16px;
+    padding: 24px;
+
+    background-color: #FFFCF5;
+    border-radius: 8px;
+}
+
+.game-grid-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.grid {
+    display: grid;
+    gap: 10px;
+    margin: auto;
+}
+
+.grid input {
+    height: 80px;
+    width: 80px;
+
+    border-radius: 8px;
+    background-color: #D9D9D9;
+
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 40px;
+}
+
+.correct {
+    background-color: green !important;
+}
+
+.misplaced {
+    background-color: orange !important;
+}
+
+.incorrect {
+    background-color: gray !important;
+}
+
+.grid input:disabled {
+    background-color: #A9A9A9;
+}
+
+.game-action-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#gameForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    
+    gap: 24px;
+}
+
+/* Btns */
+/* ------------------------------------------------- */
+
+.primary-btn {
+    height: 50px;
+    max-width: 300px;
+    min-width: 170px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    background-color: #ADDDA1;
+    border-radius: 8px;
+    border: none;
+
+    transition: transform 0.1s ease;
+}
+
+.primary-btn:hover {
+    transform: scale(110%);
+
+    background-color: #c0f5b3;
+}
+
+/* Text */
+/* ------------------------------------------------- */
+
+/* use in btns */
+h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
 }
