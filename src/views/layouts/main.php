@@ -1,13 +1,10 @@
 <?php
 
-function is_mobile() {
-    $user_agent = $_SERVER['HTTP_USER_AGENT'];
-    return preg_match('/Mobile|Android|BlackBerry|iPhone|Windows Phone/', $user_agent);
-}
+require_once __DIR__ . '/../../config/detect_device.php';
 
 ob_start();
 
-require (is_mobile() ? __DIR__ . '/../layouts/mobile.php' : __DIR__ . '/../layouts/desktop.php');
+require (DeviceService::isMobile() ? __DIR__ . '/../layouts/mobile.php' : __DIR__ . '/../layouts/desktop.php');
 
 $content = ob_get_clean();
 
@@ -23,6 +20,7 @@ $content = ob_get_clean();
     <link rel="stylesheet" href="/public/assets/css/variables.css">
 </head>
 <body>
+    <?php require __DIR__ . '/../partials/header.php'; ?>
     <?php echo $content; ?>
     <script src="/public/assets/js/script.js"></script>
 </body>

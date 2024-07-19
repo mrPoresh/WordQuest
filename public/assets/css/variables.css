@@ -22,7 +22,9 @@
     --accent-contrast-600: #212121;
     --accent-contrast-700: #212121;
     --accent-contrast-800: #000000;
-    --accent-contrast-900: #212121;
+    --accent-contrast-900: #000000;
+    
+    --accent-black-900: #000000;
 
     --primary-50: #E6F2A6;
     --primary-100: #E0F09C;
@@ -79,7 +81,7 @@
     --accent-600: #757575;
     --accent-700: #616161;
     --accent-800: #424242;
-    --accent-900: #212121;
+    --accent-900: #000000;
 
     --accent-contrast-50: #000000;
     --accent-contrast-100: #000000;
