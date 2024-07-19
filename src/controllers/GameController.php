@@ -26,10 +26,10 @@ class GameController {
         $stmt = $this->pdo->query("SELECT word FROM $tableName ORDER BY RAND() LIMIT 1");
         $secretWord = $stmt->fetchColumn();
 
-        $sql = "INSERT INTO games (user_id, secret_word, max_attempts, max_win_score, loose_score) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO games (user_id, secret_word, word_length, attempts, max_attempts, max_win_score, loose_score) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([$userId, $secretWord, $maxAttempts, $winScore, $looseScore]);
+        return $stmt->execute([$userId, $secretWord, $wordLength, 0, $maxAttempts, $winScore, $looseScore]);
     }
 
     public function endActiveGame($userId) {

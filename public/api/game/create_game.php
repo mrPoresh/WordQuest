@@ -13,7 +13,7 @@ header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {     //  TODO: Add input value for attmpts.
     $data = json_decode(file_get_contents('php://input'), true);
     $wordLength = $data['wordLength'];
-    $maxAttempts = $data['wordLength'];
+    $maxAttempts = $data['maxAttempts'];
     
     if ($wordLength < 4 || $wordLength > 8 || $maxAttempts < 3 || $maxAttempts > 8) {
         echo json_encode(['success' => false, 'error' => 'Invalid word length or max attempts']);

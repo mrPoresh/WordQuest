@@ -1,4 +1,68 @@
+<?php
 
+require_once '../src/config/session.php';
+require_once '../src/config/database.php';
+require_once '../src/controllers/AuthController.php';
+require_once '../src/controllers/GameController.php';
+require_once '../src/middleware/AuthMiddleware.php';
+
+
+$authMiddleware = new AuthMiddleware($pdo);
+$userId = $authMiddleware->checkSession();
+
+if (!$userId) {
+    header('Location: login.php');
+    exit();
+}
+
+$gameController = new GameController($pdo);
+$activeGame = $gameController->loadGame($userId);
+
+if (!$activeGame) {
+    header('Location: game_settings.php');
+    exit();
+}
+
+error_log("Game Data: max_attempts => {$activeGame['max_attempts']}, word_length => {$activeGame['word_length']}, attempts => {$activeGame['attempts']}");
+
+$title = "Game";
+ob_start();
+
+?>
+
+<div class="game-wrapper">
+    <form id="gameForm">
+        <div class="game-grid-container">
+            <div class="grid" style="grid-template-columns: repeat(<?php echo $activeGame['word_length']; ?>, 1fr);">
+                <?php for ($i = 0; $i < $activeGame['max_attempts']; $i++): ?>
+                    <?php for ($j = 0; $j < $activeGame['word_length']; $j++): ?>
+                        <input type="text" name="guess[<?php echo $i; ?>][<?php echo $j; ?>]" <?php echo ($i > $activeGame['attempts'] || $i < $activeGame['attempts']) ? 'disabled' : ''; ?> maxlength="1" required>
+                    <?php endfor; ?>
+                <?php endfor; ?>
+            </div>
+        </div>
+
+        <button class="primary-btn" type="submit"><h4>Submit Guess</h4></button>
+    </form>
+
+    <div class="game-action-container">
+        <h2>Game Stats</h2>
+        <br>
+        <h3>Maximum points:</h3>
+        <h3>Current points:</h3>
+    </div>
+</div>
+
+<script>
+    
+</script>
+
+<?php
+
+$content = ob_get_clean();
+require __DIR__ . '/../src/views/layouts/main.php';
+
+?>
 
 
 <!-- <?php
