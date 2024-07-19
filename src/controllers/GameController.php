@@ -106,8 +106,6 @@ class GameController {
         $stmt = $this->pdo->prepare('SELECT secret_word, attempts, max_attempts, loose_score FROM games WHERE id = ? AND user_id = ?');
         $stmt->execute([$gameId, $userId]);
         $game = $stmt->fetch();
-
-        error_log($game['loose_score']);
     
         if (!$game) {
             return ['success' => false, 'error' => 'Game not found'];
@@ -143,21 +141,35 @@ class GameController {
             $this->updateUserScore($userId, -$game['loose_score']);
         }
 
-        if ($status !== 'in_progress') {
-            // Delete all attempts for the game
+        if ($status != 'in_progress') {
             $stmt = $this->pdo->prepare('DELETE FROM attempts WHERE game_id = ?');
             $stmt->execute([$gameId]);
         } else {
-            // Insert attempt into attempts table
-            $stmt = $this->pdo->prepare('INSERT INTO attempts (game_id, attempt_word) VALUES (?, ?)');
-            $stmt->execute([$gameId, implode('', $guess)]);
+            // Save attempt with feedback
+            $stmt = $this->pdo->prepare('INSERT INTO attempts (game_id, attempt_word, feedback) VALUES (?, ?, ?)');
+            $stmt->execute([$gameId, implode('', $guess), implode('', $feedback)]);
         }
     
-        // Update game attempts and status
+        // Update game status and attempts count
         $stmt = $this->pdo->prepare('UPDATE games SET attempts = ?, status = ? WHERE id = ?');
         $stmt->execute([$attempts, $status, $gameId]);
     
         return ['feedback' => $feedback, 'status' => $status];
+    }
+
+    public function getAttemptsWithFeedback($gameId) {
+        $stmt = $this->pdo->prepare('SELECT attempt_word, feedback FROM attempts WHERE game_id = ? ORDER BY id ASC');
+        $stmt->execute([$gameId]);
+        $attempts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = [];
+        foreach ($attempts as $attempt) {
+            $attempt_word = str_split($attempt['attempt_word']);
+            $feedback = str_split($attempt['feedback']);
+            $result[] = ['attempt_word' => $attempt_word, 'feedback' => $feedback];
+        }
+
+        return $result;
     }
 
 }

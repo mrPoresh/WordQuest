@@ -50,7 +50,8 @@ CREATE TABLE word_x (   -- in our case from word_4 -> word_8
 CREATE TABLE attempts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     game_id INT NOT NULL,
-    attempt_word VARCHAR(5) NOT NULL,
+    attempt_word VARCHAR(8) NOT NULL,
+    feedback VARCHAR(8) NOT NULL,
     attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (game_id) REFERENCES games(id)
 );
