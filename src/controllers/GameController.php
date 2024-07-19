@@ -56,8 +56,28 @@ class GameController {
     }
 
     private function updateUserScore($userId, $scoreChange) {
-        $stmt = $this->pdo->prepare('UPDATE scores SET current_score = current_score + ?, last_score = ? WHERE user_id = ?');
-        return $stmt->execute([$scoreChange, $scoreChange, $userId]);
+        // Start a transaction
+        $this->pdo->beginTransaction();
+        
+        try {
+            // Get the current score
+            $stmt = $this->pdo->prepare('SELECT current_score FROM scores WHERE user_id = ?');
+            $stmt->execute([$userId]);
+            $currentScore = $stmt->fetchColumn();
+    
+            // Update the scores
+            $stmt = $this->pdo->prepare('UPDATE scores SET current_score = current_score + ?, last_score = ? WHERE user_id = ?');
+            $result = $stmt->execute([$scoreChange, $currentScore, $userId]);
+    
+            // Commit the transaction
+            $this->pdo->commit();
+            
+            return $result;
+        } catch (Exception $e) {
+            // Rollback the transaction if something failed
+            $this->pdo->rollBack();
+            throw $e;
+        }
     }
 
     private function calculatePoints($wordLength, $attempts) {
@@ -67,6 +87,19 @@ class GameController {
         $looseScore = $maxWinScore / 2;
 
         return [$maxWinScore, $minWinScore, $looseScore];
+    }
+
+    private function calculateWinScore($wordLength, $attempts) {
+        $baseScore = $wordLength * 10;
+        $maxWinScore = $baseScore * 10;
+
+        if ($attempts <= 4) {
+            $attempts = 3;
+        }
+
+        $score = $maxWinScore - $baseScore * ($attempts - 3);
+    
+        return $score;
     }
 
     public function addAttempt($userId, $gameId, $guess) {

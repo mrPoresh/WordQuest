@@ -78,6 +78,18 @@ body {
     font-size: 40px;
 }
 
+.correct {
+    background-color: green !important;
+}
+
+.misplaced {
+    background-color: orange !important;
+}
+
+.incorrect {
+    background-color: gray !important;
+}
+
 .grid input:disabled {
     background-color: #A9A9A9;
 }
