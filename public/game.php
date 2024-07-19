@@ -18,6 +18,8 @@ if (!$userId) {
 $gameController = new GameController($pdo);
 $activeGame = $gameController->loadGame($userId);
 
+error_log($activeGame['id']);
+
 if (!$activeGame) {
     header('Location: game_settings.php');
     exit();
@@ -52,10 +54,6 @@ ob_start();
         <h3>Current points:</h3>
     </div>
 </div>
-
-<script>
-    
-</script>
 
 <?php
 
