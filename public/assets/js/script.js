@@ -325,4 +325,18 @@ function applySavedTheme() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', applySavedTheme);
+document.addEventListener('DOMContentLoaded', function() {
+    applySavedTheme();
+
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    if (currentTheme === 'dark') {
+        themeToggleBtn.classList.add('toggled');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        toggleTheme();
+        themeToggleBtn.classList.toggle('toggled');
+    });
+});
