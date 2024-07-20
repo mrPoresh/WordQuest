@@ -16,8 +16,9 @@ $content = ob_get_clean();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="/public/assets/css/global.css">
     <link rel="stylesheet" href="/public/assets/css/variables.css">
+    <link rel="stylesheet" href="/public/assets/css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <?php require __DIR__ . '/../partials/header.php'; ?>

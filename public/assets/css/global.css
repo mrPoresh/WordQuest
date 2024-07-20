@@ -12,6 +12,7 @@ body {
 
     margin: 0;
     background-color: var(--accent-900);
+    font-family: 'Ubuntu', sans-serif;
 
     transition: background-color 0.3s;
 
@@ -49,15 +50,15 @@ header {
 
     padding: 0 16px;
 
-    background-color: var(--accent-black-900);
+    background-color: var(--primary-900);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 
     &.mobile {
-        height: 80px;
+        height: 60px;
     }
 
     &.desktop {
-        height: 90px;
+        height: 80px;
     }
 
 }
@@ -166,9 +167,112 @@ header {
 /* Text */
 /* ------------------------------------------------- */
 
-/* use in btns */
-h4 {
+h1, h2, h3, h4, h5, p {
+    font-family: 'Ubuntu', sans-serif;
     margin: 0;
-    font-size: 16px;
-    font-weight: 800;
 }
+
+h1 {    /* Head Line */
+    font-size: var(--h1-font-size-large);
+}
+
+h2 {    /* Large Title */
+    font-size: var(--h2-font-size-large);
+}
+
+h3 {    /* Title */
+    font-size: var(--h3-font-size-large);
+}
+
+h4 {    /* Text */
+    font-size: var(--h4-font-size-large);
+}
+
+h5 {    /* Btn */
+    font-size: var(--h5-font-size-large);
+}
+
+p {     /* Small text */
+    font-size: var(--p-font-size-large);
+}
+
+/* Media queries */
+@media (max-width: 1680px) {
+    h1 {
+        font-size: var(--h1-font-size-large) !important;
+    }
+
+    h2 {
+        font-size: var(--h2-font-size-large) !important;
+    }
+
+    h3 {
+        font-size: var(--h3-font-size-large) !important;
+    }
+
+    h4 {
+        font-size: var(--h4-font-size-large) !important;
+    }
+
+    h5 {
+        font-size: var(--h5-font-size-large) !important;
+    }
+
+    p {
+        font-size: var(--p-font-size-large) !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    h1 {
+        font-size: var(--h1-font-size-medium) !important;
+    }
+
+    h2 {
+        font-size: var(--h2-font-size-medium) !important;
+    }
+
+    h3 {
+        font-size: var(--h3-font-size-medium) !important;
+    }
+
+    h4 {
+        font-size: var(--h4-font-size-medium) !important;
+    }
+
+    h5 {
+        font-size: var(--h5-font-size-medium) !important;
+    }
+
+    p {
+        font-size: var(--p-font-size-medium) !important;
+    }
+}
+
+@media (max-width: 800px) {
+    h1 {
+        font-size: var(--h1-font-size-small) !important;
+    }
+
+    h2 {
+        font-size: var(--h2-font-size-small) !important;
+    }
+
+    h3 {
+        font-size: var(--h3-font-size-small) !important;
+    }
+
+    h4 {
+        font-size: var(--h4-font-size-small) !important;
+    }
+
+    h5 {
+        font-size: var(--h5-font-size-small) !important;
+    }
+
+    p {
+        font-size: var(--p-font-size-small) !important;
+    }
+}
+
+/* ------------------------------------------------- */
