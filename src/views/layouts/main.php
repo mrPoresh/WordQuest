@@ -25,6 +25,7 @@ $content = ob_get_clean();
 <body>
     <?php require __DIR__ . '/../partials/header.php'; ?>
     <?php echo $content; ?>
+    <?php require __DIR__ . '/../partials/footer.php'; ?>
     <script src="/public/assets/js/script.js"></script>
 </body>
 </html>

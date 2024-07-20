@@ -2,7 +2,7 @@
 /* ------------------------------------------------- */
 
 body {
-    height: 100vh;
+    /* height: 100vh; */
 
     display: flex;
     flex-direction: column;
@@ -20,6 +20,7 @@ body {
 .body-wrapper {
     width: calc(100% - 32px);
     height: 100%;
+    min-height: 100vh;
 
     display: flex;
     flex-direction: column;
@@ -27,16 +28,16 @@ body {
     align-items: center;
     justify-content: flex-start;
 
-    padding: 0 16px;
+    padding: 0 16px 16px 16px;
 
     &.mobile {
         max-width: 600px;
-        padding: 60px 16px 0px 16px;
+        padding: 60px 16px 16px 16px;
     }
 
     &.desktop {
         max-width: 1280px;
-        padding: 70px 16px 0px 16px;
+        padding: 70px 16px 16px 16px;
     }
 }
 
@@ -101,6 +102,106 @@ header .header-navigation {
     justify-content: flex-start;
 
     gap: 16px;
+}
+
+/* Footer */
+/* ------------------------------------------------- */
+
+footer {
+    height: 100vh;
+    width: calc(100% - 32px);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 16px 16px 16px;
+    gap: 64px;
+
+    &.mobile {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &.desktop {
+        justify-content: space-between;
+    }
+}
+
+footer .contact-form-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1 1;
+}
+
+footer .contact-form-container #footerForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 16px;
+}
+
+footer .contact-form-container #footerForm .form-input-container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 8px;
+}
+
+footer .social-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex: 1 1;
+}
+
+footer .social-container .social-btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 16px;
+}
+
+footer h3 {
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--primary-900);
+
+    text-shadow: 
+        -1px -1px 0 var(--accent-black-900),
+         1px -1px 0 var(--accent-black-900),
+        -1px  1px 0 var(--accent-black-900),
+         1px  1px 0 var(--accent-black-900);
+}
+
+footer h4 {
+    color: var(--accent-contrast-900);
+}
+
+footer .contact-form-container #footerForm .form-input-container h4 {
+    width: 100%;
+    text-align: left;
+    text-transform: capitalize;
 }
 
 /* Game Page */
@@ -306,7 +407,7 @@ p {     /* Small text */
     }
 
     .body-wrapper {
-        padding: 70px 16px 0px 16px !important;
+        padding: 70px 16px 16px 16px !important;
     }
 }
 
@@ -320,7 +421,7 @@ p {     /* Small text */
     }
 
     .body-wrapper {
-        padding: 60px 16px 0px 16px !important;
+        padding: 60px 16px 16px 16px !important;
     }
 }
 
@@ -338,7 +439,7 @@ p {     /* Small text */
     }
 
     .body-wrapper {
-        padding: 60px 16px 0px 16px !important;
+        padding: 60px 16px 16px 16px !important;
     }
 }
 
@@ -692,5 +793,40 @@ p {     /* Small text */
     }
 }
 
-
+/* Forms */
 /* ------------------------------------------------- */
+
+/* -- Input */
+.form-contact-input {
+    min-width: 360px;
+    height: 32px;
+
+    border-radius: 8px;
+    border: solid 4px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-900);
+
+    background-color: var(--accent-800);
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: var(--accent-900);
+    }
+}
+
+.form-contact-area {
+    min-width: 360px;
+    height: 64px;
+
+    border-radius: 8px;
+    border: solid 4px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-900);
+
+    background-color: var(--accent-800);
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: var(--accent-900);
+    }
+}
