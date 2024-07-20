@@ -308,4 +308,35 @@ function updateGrid(feedback) {
     }
 }
 
+/* Theming */
+/* ------------------------------------------------------------------------------- */
 
+function toggleTheme() {
+    const isDarkTheme = document.documentElement.classList.toggle('dark-theme');
+    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+}
+
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+    } else {
+        document.documentElement.classList.remove('dark-theme');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    applySavedTheme();
+
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    if (currentTheme === 'dark') {
+        themeToggleBtn.classList.add('toggled');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        toggleTheme();
+        themeToggleBtn.classList.toggle('toggled');
+    });
+});

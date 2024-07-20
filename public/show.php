@@ -1,6 +1,6 @@
 <?php
 
-$title = "Home";
+$title = "Show";
 ob_start();
 
 ?>

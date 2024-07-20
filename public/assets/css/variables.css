@@ -1,0 +1,164 @@
+/* App Theming */
+/* ------------------------------------------------- */
+
+:root {
+    --accent-50: #212121;
+    --accent-100: #424242;
+    --accent-200: #616161;
+    --accent-300: #757575;
+    --accent-400: #9E9E9E;
+    --accent-500: #BDBDBD;
+    --accent-600: #E0E0E0;
+    --accent-700: #EEEEEE;
+    --accent-800: #F5F5F5;
+    --accent-900: #FAFAFA;
+
+    --accent-contrast-50: #FAFAFA;
+    --accent-contrast-100: #F5F5F5;
+    --accent-contrast-200: #EEEEEE;
+    --accent-contrast-300: #EEEEEE;
+    --accent-contrast-400: #EEEEEE;
+    --accent-contrast-500: #212121;
+    --accent-contrast-600: #212121;
+    --accent-contrast-700: #212121;
+    --accent-contrast-800: #000000;
+    --accent-contrast-900: #000000;
+
+    --accent-black-900: #000000;
+
+    --primary-50: #E6F2A6;
+    --primary-100: #E0F09C;
+    --primary-200: #DAEE92;
+    --primary-300: #D4EC88;
+    --primary-400: #CEE97E;
+    --primary-500: #D3E97A;
+    --primary-600: #C8E670;
+    --primary-700: #C2E366;
+    --primary-800: #BCDF5C;
+    --primary-900: #B6DB52;
+
+    --primary-contrast-50: #000000;
+    --primary-contrast-100: #000000;
+    --primary-contrast-200: #000000;
+    --primary-contrast-300: #000000;
+    --primary-contrast-400: #000000;
+    --primary-contrast-500: #000000;
+    --primary-contrast-600: #000000;
+    --primary-contrast-700: #000000;
+    --primary-contrast-800: #000000;
+    --primary-contrast-900: #FAFAFA;
+
+    --warn-50: #FFEBEE;
+    --warn-100: #FFCDD2;
+    --warn-200: #EF9A9A;
+    --warn-300: #E57373;
+    --warn-400: #EF5350;
+    --warn-500: #F44336;
+    --warn-600: #E53935;
+    --warn-700: #D32F2F;
+    --warn-800: #C62828;
+    --warn-900: #B71C1C;
+
+    --warn-contrast-50: #000000;
+    --warn-contrast-100: #000000;
+    --warn-contrast-200: #000000;
+    --warn-contrast-300: #000000;
+    --warn-contrast-400: #000000;
+    --warn-contrast-500: #000000;
+    --warn-contrast-600: #000000;
+    --warn-contrast-700: #000000;
+    --warn-contrast-800: #000000;
+    --warn-contrast-900: #000000;
+
+    --h1-font-size-large: 60px;
+    --h1-font-size-medium: 50px;
+    --h1-font-size-small: 40px;
+
+    --h2-font-size-large: 50px;
+    --h2-font-size-medium: 40px;
+    --h2-font-size-small: 30px;
+
+    --h3-font-size-large: 40px;
+    --h3-font-size-medium: 30px;
+    --h3-font-size-small: 25px;
+
+    --h4-font-size-large: 25px;
+    --h4-font-size-medium: 20px;
+    --h4-font-size-small: 20px;
+
+    --h5-font-size-large: 20px;
+    --h5-font-size-medium: 15px;
+    --h5-font-size-small: 15px;
+
+    --p-font-size-large: 15px;
+    --p-font-size-medium: 10px;
+    --p-font-size-small: 10px;
+}
+
+.dark-theme {
+    --accent-50: #FAFAFA;
+    --accent-100: #F5F5F5;
+    --accent-200: #EEEEEE;
+    --accent-300: #E0E0E0;
+    --accent-400: #BDBDBD;
+    --accent-500: #9E9E9E;
+    --accent-600: #757575;
+    --accent-700: #616161;
+    --accent-800: #424242;
+    --accent-900: #000000;
+
+    --accent-contrast-50: #000000;
+    --accent-contrast-100: #000000;
+    --accent-contrast-200: #212121;
+    --accent-contrast-300: #212121;
+    --accent-contrast-400: #212121;
+    --accent-contrast-500: #EEEEEE;
+    --accent-contrast-600: #EEEEEE;
+    --accent-contrast-700: #EEEEEE;
+    --accent-contrast-800: #F5F5F5;
+    --accent-contrast-900: #FAFAFA;
+
+    --primary-50: #E6F2A6;
+    --primary-100: #E0F09C;
+    --primary-200: #DAEE92;
+    --primary-300: #D4EC88;
+    --primary-400: #CEE97E;
+    --primary-500: #D3E97A;
+    --primary-600: #C8E670;
+    --primary-700: #C2E366;
+    --primary-800: #BCDF5C;
+    --primary-900: #B6DB52;
+
+    --primary-contrast-50: #FAFAFA;
+    --primary-contrast-100: #000000;
+    --primary-contrast-200: #000000;
+    --primary-contrast-300: #000000;
+    --primary-contrast-400: #000000;
+    --primary-contrast-500: #000000;
+    --primary-contrast-600: #000000;
+    --primary-contrast-700: #000000;
+    --primary-contrast-800: #000000;
+    --primary-contrast-900: #000000;
+
+    --warn-50: #FFEBEE;
+    --warn-100: #FFCDD2;
+    --warn-200: #EF9A9A;
+    --warn-300: #E57373;
+    --warn-400: #EF5350;
+    --warn-500: #F44336;
+    --warn-600: #E53935;
+    --warn-700: #D32F2F;
+    --warn-800: #C62828;
+    --warn-900: #B71C1C;
+
+    --warn-contrast-50: #000000;
+    --warn-contrast-100: #000000;
+    --warn-contrast-200: #000000;
+    --warn-contrast-300: #000000;
+    --warn-contrast-400: #000000;
+    --warn-contrast-500: #000000;
+    --warn-contrast-600: #000000;
+    --warn-contrast-700: #000000;
+    --warn-contrast-800: #000000;
+    --warn-contrast-900: #000000;
+}
