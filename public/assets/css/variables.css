@@ -46,7 +46,7 @@
     --primary-contrast-600: #000000;
     --primary-contrast-700: #000000;
     --primary-contrast-800: #000000;
-    --primary-contrast-900: #000000;
+    --primary-contrast-900: #FAFAFA;
 
     --warn-50: #FFEBEE;
     --warn-100: #FFCDD2;
@@ -129,7 +129,7 @@
     --primary-800: #BCDF5C;
     --primary-900: #B6DB52;
 
-    --primary-contrast-50: #000000;
+    --primary-contrast-50: #FAFAFA;
     --primary-contrast-100: #000000;
     --primary-contrast-200: #000000;
     --primary-contrast-300: #000000;

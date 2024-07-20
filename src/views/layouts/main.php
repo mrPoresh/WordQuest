@@ -18,7 +18,7 @@ $content = ob_get_clean();
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="/public/assets/css/variables.css">
     <link rel="stylesheet" href="/public/assets/css/global.css">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <?php require __DIR__ . '/../partials/header.php'; ?>
