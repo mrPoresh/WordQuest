@@ -25,6 +25,7 @@
     --accent-contrast-900: #000000;
 
     --accent-black-900: #000000;
+    --accent-white-900: #FAFAFA;
 
     --primary-50: #E6F2A6;
     --primary-100: #E0F09C;
@@ -82,13 +83,13 @@
     --h3-font-size-medium: 30px;
     --h3-font-size-small: 25px;
 
-    --h4-font-size-large: 25px;
-    --h4-font-size-medium: 20px;
-    --h4-font-size-small: 20px;
+    --h4-font-size-large: 22px;
+    --h4-font-size-medium: 18px;
+    --h4-font-size-small: 14px;
 
-    --h5-font-size-large: 20px;
-    --h5-font-size-medium: 15px;
-    --h5-font-size-small: 15px;
+    --h5-font-size-large: 16px;
+    --h5-font-size-medium: 12px;
+    --h5-font-size-small: 10px;
 
     --p-font-size-large: 15px;
     --p-font-size-medium: 10px;
@@ -105,7 +106,7 @@
     --accent-600: #757575;
     --accent-700: #616161;
     --accent-800: #424242;
-    --accent-900: #000000;
+    --accent-900: #212121;
 
     --accent-contrast-50: #000000;
     --accent-contrast-100: #000000;
@@ -138,7 +139,7 @@
     --primary-contrast-600: #000000;
     --primary-contrast-700: #000000;
     --primary-contrast-800: #000000;
-    --primary-contrast-900: #000000;
+    --primary-contrast-900: #212121;
 
     --warn-50: #FFEBEE;
     --warn-100: #FFCDD2;

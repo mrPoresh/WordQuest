@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../config/detect_device.php';
 
 ?>
 
-<header class="<?php echo DeviceService::isMobile() ? 'mobile' : 'desktop'; ?>">
+<header id="main-header" class="<?php echo DeviceService::isMobile() ? 'mobile' : 'desktop'; ?>">
     <h3>Word Quest</h3>
     <div class="header-action">
         <div appToggBtn id="theme-toggle-btn"></div>
