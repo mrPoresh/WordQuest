@@ -38,6 +38,14 @@ class UserController {
         $user = $stmt->fetch();
         return $user ?: null;
     }
+
+    public function getUserGameHistory($userId) {
+        $sql = "SELECT * FROM games WHERE user_id = ? ORDER BY start_time DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        
+        return $stmt->fetchAll();
+    }
 }
 
 ?>
