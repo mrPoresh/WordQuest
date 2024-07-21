@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../config/detect_device.php';
 
 ?>
 
-<footer class="<?php echo DeviceService::isMobile() ? 'mobile' : 'desktop'; ?>">
+<footer id="main-footer" class="<?php echo DeviceService::isMobile() ? 'mobile' : 'desktop'; ?>">
     <div class="social-container">
         <h3>Word Quest</h3>
         <br>

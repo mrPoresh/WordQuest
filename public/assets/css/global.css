@@ -39,6 +39,11 @@ body {
         max-width: 1280px;
         padding: 70px 16px 16px 16px;
     }
+
+    &.minimized {
+        padding: 0 16px !important;
+        justify-content: center;
+    }
 }
 
 /* Header */
@@ -150,7 +155,7 @@ footer .contact-form-container #footerForm {
     gap: 16px;
 }
 
-footer .contact-form-container #footerForm .form-input-container {
+.form-input-container { /* footer .contact-form-container #footerForm */
     width: 100%;
 
     display: flex;
@@ -281,6 +286,102 @@ footer .contact-form-container #footerForm .form-input-container h4 {
     justify-content: flex-start;
     
     gap: 24px;
+}
+
+/* Login */
+/* ------------------------------------------------- */
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    
+    gap: 16px;
+}
+
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    
+    gap: 16px;
+}
+
+.login-form-container #loginForm .form-input-container h4 {
+    width: 100%;
+    text-align: left;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
+}
+
+.login-form-container #loginForm p {
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
+
+    a {
+        padding-left: 4px;
+    }
+}
+
+.login-form-container h2 {
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
+}
+
+/* SignUp */
+/* ------------------------------------------------- */
+
+.signup-form-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    
+    gap: 16px;
+}
+
+#signupForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    
+    gap: 16px;
+}
+
+.signup-form-container #signupForm .form-input-container h4 {
+    width: 100%;
+    text-align: left;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
+}
+
+.signup-form-container #signupForm p {
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
+
+    a {
+        padding-left: 4px;
+    }
+}
+
+.signup-form-container h2 {
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--accent-contrast-900);
 }
 
 /* Text */

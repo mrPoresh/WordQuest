@@ -205,7 +205,7 @@ if (endButton) {
 /* ------------------------------------------------------------------------------- */
 
 // Event listener for login form
-const loginForm = document.getElementById('login-form');
+const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
@@ -218,7 +218,7 @@ if (loginForm) {
 }
 
 // Event listener for signup form
-const signupForm = document.getElementById('signup-form');
+const signupForm = document.getElementById('signupForm');
 if (signupForm) {
     signupForm.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
@@ -331,12 +331,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const currentTheme = localStorage.getItem('theme') || 'light';
 
-    if (currentTheme === 'dark') {
-        themeToggleBtn.classList.add('toggled');
+    if (themeToggleBtn) {
+        if (currentTheme === 'dark') {
+            themeToggleBtn.classList.add('toggled');
+        }
+    
+        themeToggleBtn.addEventListener('click', function() {
+            toggleTheme();
+            themeToggleBtn.classList.toggle('toggled');
+        });
     }
+});
 
-    themeToggleBtn.addEventListener('click', function() {
-        toggleTheme();
-        themeToggleBtn.classList.toggle('toggled');
-    });
+/* Minimaze Page */
+/* ------------------------------------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (
+        window.location.pathname.includes('login.php') ||
+        window.location.pathname.includes('signup.php')
+    ) {
+        document.getElementById('main-header').style.display = 'none';
+        document.getElementById('main-footer').style.display = 'none';
+        document.querySelector('.body-wrapper').classList.add('minimized');
+    } else {
+        document.getElementById('main-header').style.display = 'flex';
+        document.getElementById('main-footer').style.display = 'flex';
+    }
 });
