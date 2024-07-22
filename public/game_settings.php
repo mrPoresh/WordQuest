@@ -24,7 +24,7 @@ ob_start();
 
 ?>
 
-<h2>Game Setup</h2>
+<!-- <h2>Game Setup</h2>
 
 <div id="active-game-section" style="display: <?php echo $activeGame ? 'block' : 'none'; ?>">
     <p>You have an active game. Do you want to continue?</p>
@@ -57,6 +57,72 @@ ob_start();
         <br>
         <button type="submit">Start Game</button>
     </form>
+</div> -->
+
+<div class="page-wrapper">
+    <div class="active-game-seession" style="display: <?php echo $activeGame ? 'flex' : 'none'; ?>">
+
+    </div>
+
+    <div class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
+        <h2>Game SetUp</h2>
+        <form id="gameSetupForm">
+            <div class="select-container">
+                <label for="word-length"><h4>Select word length: </h4></label>
+                <select class="select-primary" id="word-length" name="word-length" onchange="updatePointsInfo()">
+                    <option value="4">4 letters</option>
+                    <option value="5">5 letters</option>
+                    <option value="6">6 letters</option>
+                    <option value="7">7 letters</option>
+                    <option value="8">8 letters</option>
+                </select>
+
+                <label for="max-attempts"><h4>Select max attempts: </h4></label>
+                <select class="select-primary" id="max-attempts" name="max-attempts" onchange="updatePointsInfo()">
+                    <option value="3">3 attempts</option>
+                    <option value="4">4 attempts</option>
+                    <option value="5">5 attempts</option>
+                    <option value="6">6 attempts</option>
+                    <option value="7">7 attempts</option>
+                    <option value="8">8 attempts</option>
+                </select>
+                <br>
+                <h4 id="points-max"></h4>
+                <h4 id="points-min"></h4>
+                <h4 id="points-los"></h4>
+            </div>
+
+            <button type="submit" class="btn-round medium primary"><h5>Play</h5></button>
+        </form>
+    </div>
+
+    <div class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
+        <h2>Game Rules</h2>
+        <div class="rules-list">
+            <h3>Start the Game</h3>
+
+            <h4>Select word length (4 to 8 letters) and number of attempts (3 to 8).
+            The game begins with a randomly chosen word of the selected length.</h4>
+            <br>
+            <h3>Gameplay</h3>
+
+            <h4>Enter your guess in the provided field.
+            After each attempt, you will receive feedback:
+            Green: Letter is in the correct position.
+            Yellow: Letter is in the word but in the wrong position.
+            Gray: Letter is not in the word.</h4>
+            <br>
+            <h3>End of Game</h3>
+
+            <h4>Win: If you guess the word before running out of attempts, you win.</h4>
+            <h4>Lose: If you run out of attempts without guessing the word, you lose.</h4>
+            <!-- <br>
+            <h3>Scoring</h3>
+            <h4>Points are awarded for each correct letter in the correct position.
+            Bonus points for remaining attempts.
+            Points are deducted in case of a loss.</h4> -->
+        </div>
+    </div>
 </div>
 
 <script>
@@ -75,7 +141,9 @@ ob_start();
 
         const { maxWinScore, minWinScore, looseScore } = calculatePoints(wordLength, maxAttempts);
 
-        document.getElementById('points-info').innerText = `Maximum points: ${maxWinScore}, Minimum points: ${minWinScore}, Loose points: ${looseScore}`;
+        document.getElementById('points-max').innerText = `Maximum points: ${maxWinScore}`;
+        document.getElementById('points-min').innerText = `Minimum points: ${minWinScore}`;
+        document.getElementById('points-los').innerText = `Loose points: ${looseScore}`;
     }
 
     document.addEventListener('DOMContentLoaded', function() {

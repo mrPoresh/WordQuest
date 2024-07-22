@@ -232,7 +232,7 @@ if (signupForm) {
 }
 
 // Event listener for game setup form
-const gameSetupForm = document.getElementById('game-setup-form');
+const gameSetupForm = document.getElementById('gameSetupForm');
 if (gameSetupForm) {
     gameSetupForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -359,3 +359,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('main-footer').style.display = 'flex';
     }
 });
+
+/* Navigation */
+/* ------------------------------------------------------------------------------- */
+
+function navigate(url) {
+    window.location.href = url;
+}
