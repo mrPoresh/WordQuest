@@ -76,8 +76,8 @@
     --h1-font-size-small: 45px;
 
     --h2-font-size-large: 45px;
-    --h2-font-size-medium: 30px;
-    --h2-font-size-small: 28px;
+    --h2-font-size-medium: 40px;
+    --h2-font-size-small: 38px;
 
     --h3-font-size-large: 35px;
     --h3-font-size-medium: 32px;
@@ -94,6 +94,18 @@
     --p-font-size-large: 15px;
     --p-font-size-medium: 10px;
     --p-font-size-small: 10px;
+
+    --border-radus-small: 4px;
+    --border-radus-meduim: 8px;
+    --border-radus-large: 16px;
+
+    --gap-small: 16px;
+    --gap-meduim: 32px;
+    --gap-large: 64px;
+
+    --padding-small: 8px;
+    --padding-medium: 16px;
+    --padding-large: 32px;
 }
 
 .dark-theme {

@@ -359,3 +359,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('main-footer').style.display = 'flex';
     }
 });
+
+/* Navigation */
+/* ------------------------------------------------------------------------------- */
+
+function navigate(url) {
+    window.location.href = url;
+}

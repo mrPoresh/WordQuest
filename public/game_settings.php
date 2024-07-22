@@ -59,12 +59,12 @@ ob_start();
     </form>
 </div> -->
 
-<div class="game-settings-wrapper">
+<div class="page-wrapper">
     <div class="active-game-seession" style="display: <?php echo $activeGame ? 'flex' : 'none'; ?>">
 
     </div>
 
-    <div class="settings-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
+    <div class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
         <h2>Game SetUp</h2>
         <form id="gameSetupForm">
             <div class="select-container">
@@ -96,8 +96,8 @@ ob_start();
         </form>
     </div>
 
-    <div class="rules-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
-        <h2>Game SetUp</h2>
+    <div class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
+        <h2>Game Rules</h2>
         <div class="rules-list">
             <h3>Start the Game</h3>
 
