@@ -71,23 +71,23 @@
     --warn-contrast-800: #000000;
     --warn-contrast-900: #000000;
 
-    --h1-font-size-large: 60px;
+    --h1-font-size-large: 55px;
     --h1-font-size-medium: 50px;
-    --h1-font-size-small: 40px;
+    --h1-font-size-small: 45px;
 
-    --h2-font-size-large: 50px;
-    --h2-font-size-medium: 40px;
-    --h2-font-size-small: 30px;
+    --h2-font-size-large: 45px;
+    --h2-font-size-medium: 30px;
+    --h2-font-size-small: 28px;
 
-    --h3-font-size-large: 40px;
-    --h3-font-size-medium: 30px;
-    --h3-font-size-small: 25px;
+    --h3-font-size-large: 35px;
+    --h3-font-size-medium: 32px;
+    --h3-font-size-small: 30px;
 
-    --h4-font-size-large: 22px;
-    --h4-font-size-medium: 18px;
+    --h4-font-size-large: 18px;
+    --h4-font-size-medium: 16px;
     --h4-font-size-small: 14px;
 
-    --h5-font-size-large: 16px;
+    --h5-font-size-large: 14px;
     --h5-font-size-medium: 12px;
     --h5-font-size-small: 10px;
 

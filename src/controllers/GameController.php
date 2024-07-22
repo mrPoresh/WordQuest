@@ -33,16 +33,21 @@ class GameController {
     }
 
     public function endActiveGame($userId) {
-        $stmt = $this->pdo->prepare('UPDATE games SET status = ? WHERE user_id = ? AND status = ?');
-        $stmt->execute(['lost', $userId, 'in_progress']);
-
-        $stmt = $this->pdo->prepare('SELECT loose_score FROM games WHERE user_id = ? AND status = ? ORDER BY end_time DESC LIMIT 1');
-        $stmt->execute([$userId, 'lost']);
+        $stmt = $this->pdo->prepare('SELECT id, loose_score FROM games WHERE user_id = ? AND status = ? ORDER BY start_time DESC LIMIT 1');
+        $stmt->execute([$userId, 'in_progress']);
         $game = $stmt->fetch();
 
         if ($game) {
+            $gameId = $game['id'];
             $looseScore = -$game['loose_score'];
-            return $this->updateUserScore($userId, $looseScore);
+
+            // Update game status and score
+            $stmt = $this->pdo->prepare('UPDATE games SET status = ?, end_time = NOW(), game_score = ? WHERE id = ?');
+            $stmt->execute(['lost', $looseScore, $gameId]);
+
+            // Update user score
+            $this->updateUserScore($userId, $looseScore);
+            return true;
         }
 
         return false;
@@ -144,6 +149,10 @@ class GameController {
         if ($status != 'in_progress') {
             $stmt = $this->pdo->prepare('DELETE FROM attempts WHERE game_id = ?');
             $stmt->execute([$gameId]);
+
+            // Update game status, end time and score
+            $stmt = $this->pdo->prepare('UPDATE games SET attempts = ?, status = ?, end_time = NOW(), game_score = ? WHERE id = ?');
+            $stmt->execute([$attempts, $status, $winScore ?? -$game['loose_score'], $gameId]);
         } else {
             // Save attempt with feedback
             $stmt = $this->pdo->prepare('INSERT INTO attempts (game_id, attempt_word, feedback) VALUES (?, ?, ?)');

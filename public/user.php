@@ -61,7 +61,7 @@ ob_start();
                             <td><?php echo htmlspecialchars($game['start_time']); ?></td>
                             <td><?php echo htmlspecialchars($game['end_time'] ? $game['end_time'] : 'Null'); ?></td>
                             <td><?php echo htmlspecialchars($game['status']); ?></td>
-                            <td style="text-align: center"><?php echo htmlspecialchars($game['status'] === 'won' ? $game['max_win_score'] : -$game['loose_score']); ?></td>
+                            <td style="text-align: center"><?php echo htmlspecialchars($game['status'] === 'won' ? $game['game_score'] ? $game['game_score'] : 0 : -$game['loose_score']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

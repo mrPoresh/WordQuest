@@ -599,10 +599,104 @@ footer .contact-form-container #footerForm .form-input-container h4 {
     gap: 8px;
 }
 
+/* Game Settings */
+/* ------------------------------------------------- */
+
+.game-settings-wrapper {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 32px;
+}
+
+.settings-container {
+    /* width: 100%;
+    height: 100%; */
+
+    flex: 1 1;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--accent-700);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+
+    gap: 16px;
+    padding: 16px;
+}
+
+#gameSetupForm {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 32px;
+}
+
+.select-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 16px;
+}
+
+.rules-container {
+    /* width: 100%;
+    height: 100%; */
+
+    flex: 1 1;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--accent-700);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+
+    gap: 16px;
+    padding: 16px;
+}
+
+.rules-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 8px;
+}
+
+.rules-list h4, h4 {
+    width: 100%;
+    text-align: left;
+}
+
 /* Text */
 /* ------------------------------------------------- */
 
-h1, h2, h3, h4, h5, p {
+h1, h2, h3, h4, h5, p, option {
     font-family: 'Ubuntu', sans-serif;
     margin: 0;
 }
@@ -786,6 +880,14 @@ p {     /* Small text */
 
     .home-wrapper .about-container .about-section {
         align-items: flex-start;
+    }
+
+    .user-wrapper {
+        flex-direction: column;
+    }
+
+    .game-settings-wrapper {
+        flex-direction: column;
     }
 }
 
@@ -1175,4 +1277,27 @@ p {     /* Small text */
     &:hover {
         background-color: var(--accent-900);
     }
+}
+
+/* Select */
+
+.select-primary {
+    min-width: 300px;
+    height: 32px;
+
+    border-radius: 8px;
+    border: solid 4px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-900);
+
+    background-color: var(--accent-800);
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: var(--accent-900);
+    }
+}
+
+option {
+    padding: 4px;
 }

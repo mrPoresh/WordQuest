@@ -232,7 +232,7 @@ if (signupForm) {
 }
 
 // Event listener for game setup form
-const gameSetupForm = document.getElementById('game-setup-form');
+const gameSetupForm = document.getElementById('gameSetupForm');
 if (gameSetupForm) {
     gameSetupForm.addEventListener('submit', function(e) {
         e.preventDefault();
