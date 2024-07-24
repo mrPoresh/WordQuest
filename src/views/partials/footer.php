@@ -12,11 +12,11 @@ require_once __DIR__ . '/../../config/detect_device.php';
         <h4>For more info, here is my social networks</h4>
         <br>
         <br>
-        <div class="social-btns">
-            <button class="btn-icon medium primary"><i class="fa-regular fa-compass"></i></button>
-            <button class="btn-icon medium primary"><i class="fa-regular fa-compass"></i></button>
-            <button class="btn-icon medium primary"><i class="fa-regular fa-compass"></i></button>
-            <button class="btn-icon medium primary"><i class="fa-regular fa-compass"></i></button>
+        <div class="social-btns <?php echo DeviceService::isMobile() ? 'mobile' : 'desktop'; ?>">
+            <button class="btn-icon medium primary"><img src="/public/assets/images/icons/telegram.svg"></button>
+            <button class="btn-icon medium primary"><img src="/public/assets/images/icons/inst.svg"></button>
+            <button class="btn-icon medium primary"><img src="/public/assets/images/icons/mess.svg"></button>
+            <button class="btn-icon medium primary"><img src="/public/assets/images/icons/telegram.svg"></button>
         </div>
     </div>
     

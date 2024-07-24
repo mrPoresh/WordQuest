@@ -69,12 +69,12 @@ ob_start();
             <button class="btn-round medium primary" type="submit"><h4>Submit Guess</h4></button>
         </form>
 
-        <div class="game-action-container">
+        <!-- <div class="game-action-container">
             <h3>Game Stats</h3>
             <br>
-            <h4>Maximum points:</h4>
-            <h4>Current points:</h4>
-        </div>
+            <h4>Maximum points: <?php echo $activeGame['max_win_score']; ?></h4>
+            <h4>Current points: <?php echo $activeGame; ?></h4>
+        </div> -->
     </div>
 </div>
 

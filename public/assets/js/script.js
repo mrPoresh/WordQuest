@@ -172,7 +172,7 @@ function sendAttempt(guess) {
         if (data.success) {
             console.log('Attempt result:', data.result);
             if (data.result.status !== 'in_progress') {
-                window.location.href = 'result.php';
+                window.location.href = 'user.php';
             } else {
                 updateGrid(data.result.feedback);
             }
