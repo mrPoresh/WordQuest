@@ -60,11 +60,15 @@ ob_start();
 </div> -->
 
 <div class="page-wrapper">
-    <div class="active-game-seession" style="display: <?php echo $activeGame ? 'flex' : 'none'; ?>">
-
+    <div id="question" class="active-game-seession" style="display: <?php echo $activeGame ? 'flex' : 'none'; ?>">
+        <h4 style="color: var(--accent-contrast-900);">You have an active game. Do you want to continue?</h4>
+        <div style="display: flex; flex-direction: row; gap: 16px;">
+            <button class="btn-round medium primary" id="continue-game-btn"><h5>Yes</h5></button>
+            <button class="btn-round medium warn" id="end-game-btn"><h5>No</h5></button>
+        </div>
     </div>
 
-    <div class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
+    <div id="settings" class="page-container" style="display: <?php echo $activeGame ? 'none' : 'flex'; ?>">
         <h2>Game SetUp</h2>
         <form id="gameSetupForm">
             <div class="select-container">
