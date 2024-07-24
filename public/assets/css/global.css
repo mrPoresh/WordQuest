@@ -354,6 +354,14 @@ footer .contact-form-container #footerForm .form-input-container h4 {
     text-align: left;
 }
 
+.active-game-seession {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-meduim);
+}
+
 /* Login */
 /* ------------------------------------------------- */
 

@@ -139,8 +139,8 @@ function endGame() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('game-setup-section').style.display = 'block';
-            document.getElementById('active-game-section').style.display = 'none';
+            document.getElementById('settings').style.display = 'block';
+            document.getElementById('question').style.display = 'none';
         } else {
             alert('Failed to end the game: ' + data.error);
         }
