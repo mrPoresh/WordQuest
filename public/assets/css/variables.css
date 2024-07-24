@@ -99,6 +99,10 @@
     --border-radus-meduim: 8px;
     --border-radus-large: 16px;
 
+    --border-size-small: 2px;
+    --border-size-meduim: 4px;
+    --border-size-large: 8px;
+
     --gap-small: 16px;
     --gap-meduim: 32px;
     --gap-large: 64px;
