@@ -270,6 +270,8 @@ footer .contact-form-container #footerForm .form-input-container h4 {
     align-items: center;
     justify-content: center;
 
+    padding-top: 32px;
+
 }
 
 .game-container {
@@ -315,8 +317,8 @@ footer .contact-form-container #footerForm .form-input-container h4 {
 }
 
 .grid input {
-    height: 80px;
-    width: 80px;
+    height: 70px;
+    width: 70px;
 
     border-radius: 8px;
     background-color: var(--accent-500);
@@ -745,7 +747,7 @@ footer .contact-form-container #footerForm .form-input-container h4 {
 /* Text */
 /* ------------------------------------------------- */
 
-h1, h2, h3, h4, h5, p, option, th, td, input, textarea {
+h1, h2, h3, h4, h5, p, option, th, td, input, textarea, select {
     font-family: 'Ubuntu', sans-serif;
     margin: 0;
 }
@@ -794,6 +796,12 @@ textarea {
     font-weight: 600;
 }
 
+select {
+    font-size: var(--h4-font-size-large);
+    color: var(--accent-contrast-50);
+    font-weight: 600;
+}
+
 /* Media queries */
 @media (max-width: 1680px) {
     h1 {
@@ -833,6 +841,10 @@ textarea {
     }
 
     textarea {
+        font-size: var(--h4-font-size-large);
+    }
+
+    select {
         font-size: var(--h4-font-size-large);
     }
 }
@@ -878,6 +890,10 @@ textarea {
         font-size: var(--h4-font-size-medium);
     }
 
+    select {
+        font-size: var(--h4-font-size-medium);
+    }
+
 }
 
 @media (max-width: 800px) {
@@ -918,6 +934,10 @@ textarea {
     }
 
     textarea {
+        font-size: var(--h4-font-size-small);
+    }
+
+    select {
         font-size: var(--h4-font-size-small);
     }
 
@@ -1027,6 +1047,19 @@ textarea {
 
     .game-settings-wrapper {
         flex-direction: column;
+    }
+
+    .game-wrapper {
+        padding-top: 0px;
+    }
+
+    .game-container {
+        flex-direction: column;
+    }
+
+    .grid input {
+        width: 60px;
+        height: 60px;
     }
 }
 
@@ -1489,11 +1522,14 @@ textarea {
 /* Select */
 
 .select-primary {
+    width: 100%;
+
     min-width: 300px;
+    max-width: 400px;
     height: 32px;
 
-    border-radius: 8px;
-    border: solid 4px;
+    border-radius: var(--border-radus-meduim);
+    border: solid var(--border-size-meduim);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     border-color: var(--primary-900);
 
@@ -1501,7 +1537,13 @@ textarea {
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: var(--accent-900);
+        background-color: var(--accent-700);
+    }
+
+    &:focus {
+        outline: none;
+        background-color: var(--accent-600);
+        border-color: var(--primary-800);
     }
 }
 

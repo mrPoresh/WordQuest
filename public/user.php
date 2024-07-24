@@ -57,7 +57,7 @@ ob_start();
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <button class="btn-round medium primary"><h5>Play</h5></button>
+        <button class="btn-round medium primary" onclick="navigate('game.php')"><h5>Play</h5></button>
     </div>
 </div>
 

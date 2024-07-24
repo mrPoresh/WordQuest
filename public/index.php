@@ -37,7 +37,7 @@ ob_start();
             </div>
         </div>
 
-        <button type="submit" class="btn-round medium primary"><h5>Try Game</h5></button>
+        <button class="btn-round medium primary" onclick="navigate('game.php')"><h5>Try Game</h5></button>
     </div>
 
     <div class="about-container">
